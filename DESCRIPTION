@@ -13,4 +13,15 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: 
-    testthat
+    testthat (>= 2.1.0)
+Imports: 
+    dplyr,
+    tidyr,
+    stringr,
+    ggplot2,
+    ggrepel,
+    conflicted,
+    tm,
+    wordcloud,
+    RColorBrewer,
+    wordcloud2
