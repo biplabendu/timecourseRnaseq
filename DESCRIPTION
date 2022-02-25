@@ -25,3 +25,5 @@ Imports:
     wordcloud,
     RColorBrewer,
     wordcloud2
+URL: https://github.com/biplabendu/timecourseRnaseq
+BugReports: https://github.com/biplabendu/timecourseRnaseq/issues
