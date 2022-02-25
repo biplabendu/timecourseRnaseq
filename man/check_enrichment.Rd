@@ -51,9 +51,3 @@ A data.frame or tibble containing all the results of the enrichment analyses, an
 \description{
 Title
 }
-\examples{
-set.seed(420)
-If a gene_Id has multiple GO_terms, we want them in multiple row, instead of one
-Let's replace the NAs in GOs and pfams with "no_annot"
-Let's flatten the files
-}

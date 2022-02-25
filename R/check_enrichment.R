@@ -21,8 +21,6 @@
 #' @return A data.frame or tibble containing all the results of the enrichment analyses, and a ggplot object (if plot=T).
 #' @export
 #'
-#' @examples
-#' set.seed(420)
 check_enrichment <- function(geneset,
                              what="GOs",
                              function.dir = ".",
