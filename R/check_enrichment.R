@@ -65,9 +65,8 @@ check_enrichment <- function(geneset,
     if (org=="ophio_cflo"){
 
       print("Loading annotation file for Ophiocordyceps camponoti-floridani")
-      all_genes <- read.csv(paste0(function.dir,"/data/ophio_cflo_annots_robin_ncbi.csv"),
-                            header=T, stringsAsFactors = F, na.strings = c(NA,""," ")) %>% as_tibble() %>%
-        select(gene_name, gene_desc=blast_annot, everything())
+      load("./data/ophio_cflo_annots.rda")
+      all_genes <- ophio_cflo_annots
 
       # define the separator
       separator = "; "
@@ -82,9 +81,8 @@ check_enrichment <- function(geneset,
     } else if (org=="ophio_kim"){
 
       print("Loading annotation file for Ophiocordyceps kimflemingae")
-      all_genes <- read.csv(paste0(function.dir,"/data/ophio_kim_annots_robin_ncbi.csv"),
-                            header=T, stringsAsFactors = F, na.strings = c(NA,""," ")) %>% as_tibble() %>%
-        mutate(gene_desc="not_available")
+      load("./data/ophio_kim_annots.rda")
+      all_genes <- ophio_kim_annots
 
       # define the separator
       separator = ";"
@@ -99,9 +97,9 @@ check_enrichment <- function(geneset,
     } else if (org=="cflo"){
 
       print("Loading annotation file for Camponotus floridanus")
-      all_genes <- read.csv(paste0(function.dir,"/data/cflo_annots.csv"),
-                            header=T, stringsAsFactors = F, na.strings = c(NA,""," ")) %>% as_tibble() %>%
-        select(gene_name, gene_desc=old_annotation, everything())
+      load("./data/cflo_annots.rda")
+      all_genes <- cflo_annots
+
       # define the separator
       separator = "; "
 
@@ -116,9 +114,9 @@ check_enrichment <- function(geneset,
     } else if (org=="beau"){
 
       print("Loading annotation file for Beauveria bassiana")
-      all_genes <- read.csv(paste0(function.dir,"/data/beau_annots_robin_ncbi.csv"),
-                            header=T, stringsAsFactors = F, na.strings = c(NA,""," ")) %>% as_tibble() %>%
-        mutate(gene_desc="not_available")
+      load("./data/beau_annots.rda")
+      all_genes <- beau_annots
+
       # define the separator
       separator = "; "
       # check if annotation file is correct
@@ -381,7 +379,38 @@ check_enrichment <- function(geneset,
 
     if (plot==T) {
 
-      source(paste0(function.dir,"/data/theme_publication.R"))
+      ## build the custom theme
+      theme_Publication <- function(base_size=14, base_family="Helvetica") {
+        library(grid)
+        library(ggthemes)
+        (theme_foundation(base_size=base_size, base_family=base_family)
+          + theme(plot.title = element_text(face = "bold",
+                                            size = rel(1.2), hjust = 0.5),
+                  text = element_text(),
+                  panel.background = element_rect(colour = NA),
+                  plot.background = element_rect(colour = NA),
+                  panel.border = element_rect(colour = NA),
+                  axis.title = element_text(face = "bold",size = rel(1)),
+                  axis.title.y = element_text(angle=90,vjust =2),
+                  axis.title.x = element_text(vjust = -0.2),
+                  axis.text = element_text(),
+                  axis.line = element_line(colour="black"),
+                  axis.ticks = element_line(),
+                  panel.grid.major = element_line(colour="#f0f0f0"),
+                  panel.grid.minor = element_blank(),
+                  legend.key = element_rect(colour = NA),
+                  legend.position = "bottom",
+                  legend.direction = "horizontal",
+                  legend.key.size= unit(0.4, "cm"),
+                  legend.margin = unit(0, "cm"),
+                  legend.title = element_text(face="italic"),
+                  plot.margin=unit(c(10,5,5,5),"mm"),
+                  strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
+                  strip.text = element_text(face="bold")
+          ))
+
+      }
+
 
       #Save the data to an object
       df <- df.enriched
