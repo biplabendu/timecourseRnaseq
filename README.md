@@ -45,5 +45,17 @@ some.speciesXX.genes <- c("genes", "of", "interest", "from", "your", "species") 
 path_to_speciesXX_annotation_csv_file <- "path/to/file.csv" 
 check_enrichment(geneset=some.speciesXX.genes, path_to_annot = path_to_speciesXX_annotation_csv_file, what="GOs") # double-check if sep needs to be specified
 
+```
+    
+    
+The annotation files for the four organisms (cflo_annots, beau_annots, ophio_cflo_annots, ophio_kim_annots) are provided.    
+To see an annotation file, just type the following:
+
+```
+## org = "beau"
+head(beau_annots)
+
+## org = "cflo"
+head(cflo_annots)
 
 ```
