@@ -18,7 +18,7 @@
 #' @param simple Default is TRUE. Retains only the most relevant columns for the enrichment result.
 #' @param expand If set to TRUE, will return a long-formatted table of the filtered and simplified enrichment result.
 #'
-#' @return A data.frame or tibble containing all the results of the enrichment analyses, and a ggplot object (if plot=T).
+#' @return One tibble and one ggplot2
 #' @export
 #'
 #' @examples
@@ -58,6 +58,7 @@ check_enrichment <- function(geneset,
   library(dplyr)
   library(ggplot2)
   library(ggrepel)
+  library(stringr)
   library(conflicted)
   ## set conflict preference
   conflict_prefer("filter","dplyr", quiet = T)
@@ -69,7 +70,7 @@ check_enrichment <- function(geneset,
     if (org=="ophio_cflo"){
 
       print("Loading annotation file for Ophiocordyceps camponoti-floridani")
-      load("./data/ophio_cflo_annots.rda")
+      # load("./data/ophio_cflo_annots.rda")
       all_genes <- ophio_cflo_annots
 
       # define the separator
@@ -85,7 +86,7 @@ check_enrichment <- function(geneset,
     } else if (org=="ophio_kim"){
 
       print("Loading annotation file for Ophiocordyceps kimflemingae")
-      load("./data/ophio_kim_annots.rda")
+      # load("./data/ophio_kim_annots.rda")
       all_genes <- ophio_kim_annots
 
       # define the separator
@@ -101,7 +102,7 @@ check_enrichment <- function(geneset,
     } else if (org=="cflo"){
 
       print("Loading annotation file for Camponotus floridanus")
-      load("./data/cflo_annots.rda")
+      # load("./data/cflo_annots.rda")
       all_genes <- cflo_annots
 
       # define the separator
@@ -118,7 +119,7 @@ check_enrichment <- function(geneset,
     } else if (org=="beau"){
 
       print("Loading annotation file for Beauveria bassiana")
-      load("./data/beau_annots.rda")
+      # load("./data/beau_annots.rda")
       all_genes <- beau_annots
 
       # define the separator
@@ -182,13 +183,13 @@ check_enrichment <- function(geneset,
 
   ## make the flattened gene x annotation file,
 
-  #' If a gene_Id has multiple GO_terms, we want them in multiple row, instead of one
+  # If a gene_Id has multiple GO_terms, we want them in multiple row, instead of one
   # Select only the columns that we need
   all_genes_annots <- all_genes[,c("gene_name",{{what}})]
-  #' Let's replace the NAs in GOs and pfams with "no_annot"
+  # Let's replace the NAs in GOs and pfams with "no_annot"
   all_genes_annots[is.na(all_genes_annots)] <- "no_annot"
 
-  #' Let's flatten the files
+  # Let's flatten the files
   all_genes_annots <-
     all_genes_annots %>%
     # EDIT on 29Sep21: removing trailing and leading whitespace from the columns

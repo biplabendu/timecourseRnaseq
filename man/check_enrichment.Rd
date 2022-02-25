@@ -46,7 +46,7 @@ check_enrichment(geneset, what = "GOs", function.dir = ".",
 \item{expand}{If set to TRUE, will return a long-formatted table of the filtered and simplified enrichment result.}
 }
 \value{
-A data.frame or tibble containing all the results of the enrichment analyses, and a ggplot object (if plot=T).
+One tibble and one ggplot2
 }
 \description{
 Title
@@ -54,7 +54,4 @@ Title
 \examples{
 some.genes <- c("BBA_00100", "BBA_01000", "BBA_10000", "BBA_10001", "BBA_10002", "BBA_10003", "BBA_10004")
 check_enrichment(some.genes, org="beau", plot=F)
-If a gene_Id has multiple GO_terms, we want them in multiple row, instead of one
-Let's replace the NAs in GOs and pfams with "no_annot"
-Let's flatten the files
 }

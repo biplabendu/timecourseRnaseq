@@ -1,6 +1,7 @@
 ## code to prepare `cflo_annots` dataset goes here
 
-library(tidyverse)
+library(tidyr)
+library(dplyr)
 
 cflo_annots <-
   read.csv(paste0("./data-raw/cflo_annots.csv"),
