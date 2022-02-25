@@ -1,7 +1,31 @@
+#' Title
+#'
+#' @param geneset A character vector of gene names of interest that you want to run functional enrichment on.
+#' @param what Which functional annotation to run enrichment for? Select from "GOs", "pfams", "signalP", "TMHMM" or user-defined column name. The default is "GOs".
+#' @param function.dir Specify the path/to/the/directory that contains the folder "functions". The default is "."
+#' @param path_to_annot Specify the path/to/csv/file that contains the functional annotations for each gene. The file should contain at least two columns, one containing the gene names ("gene_name") and one containing the functional annotations ("GOs", "pfams", "signalP", "TMHMM").
+#' @param sep Specify the separator used to put together all (GO/PFAM) annotation terms for a given gene in a single column (usually ";" or "; "). The default is ";"
+#' @param gene_col What is the name of the column that contains the gene names in the user-specified annotation file? By default, the program expects your gene names to be in a column called "gene_name".
+#' @param org Organisms for which annotation files are included in the package. Choose between "cflo" (camponotus floridanus), "ophio_cflo" (ophiocordyceps camponoti-floridani), "ophio_kim" (ophiocordyceps kimflemingiae), and "beau" (beauveria bassiana)
+#' @param bg A character vector of gene names that make up the background universe against which enrichment is run for geneset. The default uses all genes present in the species' genome.
+#' @param FDR The threshold false discovery rate to infer significance. Default is 5.
+#' @param atleast Run enrichments only for annotations that are present in at least "atleast" (default is 5) of all background genes.
+#' @param verbose Default is FALSE. If set to TRUE, prints summary statistics.
+#' @param plot Default is TRUE. Plots the results of the enrichment analyses.
+#' @param n_trunc If plot is TRUE, n_trunc specifies the number of characters in the description of the annotation that is printed on the plot.
+#' @param clean If plot is TRUE, clean = F will get rid of additional labels from the plot
+#' @param filter Default is TRUE. Filters to keep only significantly overrepresented terms at the specified FDR.
+#' @param simple Default is TRUE. Retains only the most relevant columns for the enrichment result.
+#' @param expand If set to TRUE, will return a long-formatted table of the filtered and simplified enrichment result.
+#'
+#' @return A data.frame or tibble containing all the results of the enrichment analyses, and a ggplot object (if plot=T).
+#' @export
+#'
+#' @examples
+#' set.seed(420)
 check_enrichment <- function(geneset,
                              what="GOs",
                              function.dir = ".",
-                             data.dir = ".",
                              path_to_annot = "not_provided",
                              sep = ";",
                              gene_col = "gene_name",
@@ -41,7 +65,7 @@ check_enrichment <- function(geneset,
     if (org=="ophio_cflo"){
 
       print("Loading annotation file for Ophiocordyceps camponoti-floridani")
-      all_genes <- read.csv(paste0(function.dir,"/functions/func_data/ophio_cflo_annots_robin_ncbi.csv"),
+      all_genes <- read.csv(paste0(function.dir,"/data/ophio_cflo_annots_robin_ncbi.csv"),
                             header=T, stringsAsFactors = F, na.strings = c(NA,""," ")) %>% as_tibble() %>%
         select(gene_name, gene_desc=blast_annot, everything())
 
@@ -58,7 +82,7 @@ check_enrichment <- function(geneset,
     } else if (org=="ophio_kim"){
 
       print("Loading annotation file for Ophiocordyceps kimflemingae")
-      all_genes <- read.csv(paste0(function.dir,"/functions/func_data/ophio_kim_annots_robin_ncbi.csv"),
+      all_genes <- read.csv(paste0(function.dir,"/data/ophio_kim_annots_robin_ncbi.csv"),
                             header=T, stringsAsFactors = F, na.strings = c(NA,""," ")) %>% as_tibble() %>%
         mutate(gene_desc="not_available")
 
@@ -75,7 +99,7 @@ check_enrichment <- function(geneset,
     } else if (org=="cflo"){
 
       print("Loading annotation file for Camponotus floridanus")
-      all_genes <- read.csv(paste0(function.dir,"/functions/func_data/cflo_annots.csv"),
+      all_genes <- read.csv(paste0(function.dir,"/data/cflo_annots.csv"),
                             header=T, stringsAsFactors = F, na.strings = c(NA,""," ")) %>% as_tibble() %>%
         select(gene_name, gene_desc=old_annotation, everything())
       # define the separator
@@ -92,7 +116,7 @@ check_enrichment <- function(geneset,
     } else if (org=="beau"){
 
       print("Loading annotation file for Beauveria bassiana")
-      all_genes <- read.csv(paste0(function.dir,"/functions/func_data/beau_annots_robin_ncbi.csv"),
+      all_genes <- read.csv(paste0(function.dir,"/data/beau_annots_robin_ncbi.csv"),
                             header=T, stringsAsFactors = F, na.strings = c(NA,""," ")) %>% as_tibble() %>%
         mutate(gene_desc="not_available")
       # define the separator
@@ -357,7 +381,7 @@ check_enrichment <- function(geneset,
 
     if (plot==T) {
 
-      source(paste0(function.dir,"/functions/theme_publication.R"))
+      source(paste0(function.dir,"/data/theme_publication.R"))
 
       #Save the data to an object
       df <- df.enriched

@@ -1,13 +1,14 @@
 Package: timecourseRnaseq
-Title: What the Package Does (One Line, Title Case)
+Title: Analyses And Visualisation Of Timecourse RNASeq Data
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Biplabendu",
            family = "Das",
            role = c("aut", "cre"),
            email = "biplabendu.das@gmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: What license it uses
+           comment = c(ORCID = "0000-0003-0855-262X"))
+Description: Convenience functions to plot timecourse RNASeq data and perform overrepresentation anlayses.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.1.1
