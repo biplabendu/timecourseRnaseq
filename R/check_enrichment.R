@@ -21,6 +21,9 @@
 #' @return A data.frame or tibble containing all the results of the enrichment analyses, and a ggplot object (if plot=T).
 #' @export
 #'
+#' @examples
+#' some.genes <- c("BBA_00100", "BBA_01000", "BBA_10000", "BBA_10001", "BBA_10002", "BBA_10003", "BBA_10004")
+#' check_enrichment(some.genes, org="beau", plot=F)
 check_enrichment <- function(geneset,
                              what="GOs",
                              function.dir = ".",
@@ -51,7 +54,10 @@ check_enrichment <- function(geneset,
   genes <- geneset
 
   ## Load the required libraries
-  library(tidyverse)
+  library(tidyr)
+  library(dplyr)
+  library(ggplot2)
+  library(ggrepel)
   library(conflicted)
   ## set conflict preference
   conflict_prefer("filter","dplyr", quiet = T)
@@ -494,7 +500,11 @@ check_enrichment <- function(geneset,
           # (borrowed from: https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a)
 
           # load libraries
-          pacman::p_load(tm, wordcloud, RColorBrewer, wordcloud2)
+          library(tm)
+          library(wordcloud)
+          library(RColorBrewer)
+          library(wordcloud2)
+
           # get text as a character vector
           text <- df %>% pull(annot_desc)
           # load your text data as a corpus
