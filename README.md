@@ -42,8 +42,8 @@ check_enrichment(some.beau.genes, org="beau", what="pfams", plot=T, expand=T)
 
 ## specify your own annotation file (?check_enrichment)
 some.speciesXX.genes <- c("genes", "of", "interest", "from", "your", "species") # geneset
-path_to_speciesXX_annotation_csv_file <- "path/to/file.csv" 
-check_enrichment(geneset=some.speciesXX.genes, path_to_annot = path_to_speciesXX_annotation_csv_file, what="GOs") # double-check if sep needs to be specified
+path <- "path/to/speciesXX/annotation/file.csv" 
+check_enrichment(geneset=some.speciesXX.genes, path_to_annot = path, what="GOs") # double-check if sep needs to be specified
 
 ```
     
