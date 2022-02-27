@@ -18,7 +18,7 @@ Installation
 You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("biplabendu/timecourseRnaseq")
 ```
 
@@ -39,9 +39,11 @@ check_enrichment(some.beau.genes, org="beau", what="pfams", plot=F)
 
 ## pfam enrichments + plot + long-formatted enrichment results
 check_enrichment(some.beau.genes, org="beau", what="pfams", plot=T, expand=T)
+   # please note, expand=T works only if the annotation file contains a column 
+   # named "gene_desc" that contains descriptions of genes
 
 ## specify your own annotation file (?check_enrichment)
-some.speciesXX.genes <- c("genes", "of", "interest", "from", "your", "species") # geneset
+some.speciesXX.genes <- c("genes", "of", "interest", "from", "speciesXX") # geneset
 path <- "path/to/speciesXX/annotation/file.csv" 
 check_enrichment(geneset=some.speciesXX.genes, path_to_annot = path, what="GOs") # double-check if sep needs to be specified
 
