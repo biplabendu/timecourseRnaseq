@@ -51,7 +51,7 @@ check_enrichment <- function(geneset,
 
 
   # save the input list of genes for enrichment test
-  genes <- geneset
+  genes <- as.character(geneset)
 
   ## Load the required libraries
   library(tidyr)
