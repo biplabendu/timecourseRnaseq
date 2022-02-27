@@ -18,7 +18,7 @@
 #' @param simple Default is TRUE. Retains only the most relevant columns for the enrichment result.
 #' @param expand If set to TRUE, will return a long-formatted table of the filtered and simplified enrichment result.
 #'
-#' @return One tibble and one ggplot2
+#' @return A table (enrichment results as a tibble) and one plot (ggplot2 object)
 #' @export
 #'
 #' @examples

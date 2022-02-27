@@ -46,7 +46,7 @@ check_enrichment(geneset, what = "GOs", function.dir = ".",
 \item{expand}{If set to TRUE, will return a long-formatted table of the filtered and simplified enrichment result.}
 }
 \value{
-One tibble and one ggplot2
+A table (enrichment results as a tibble) and one plot (ggplot2 object)
 }
 \description{
 Title
