@@ -16,5 +16,4 @@ beau_annots <-
   select(gene_name, gene_desc, everything())
 
 
-
 usethis::use_data(beau_annots, overwrite = T)
