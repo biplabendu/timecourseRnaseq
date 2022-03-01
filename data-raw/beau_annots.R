@@ -1,6 +1,6 @@
 ## code to prepare `beau_annots` dataset goes here
 
-library(tidyverse)
+library(tidyverse, warn.conflicts = F)
 
 beau_names <-
   read.csv("./data-raw/beau_protein_gene_names_ncbi.csv",
@@ -15,5 +15,5 @@ beau_annots <-
   left_join(beau_names, by="gene_name") %>%
   select(gene_name, gene_desc, everything())
 
-
+write.csv(beau_annots,"data-raw/beau_annots.csv")
 usethis::use_data(beau_annots, overwrite = T)
