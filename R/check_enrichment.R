@@ -436,7 +436,7 @@ check_enrichment <- function(geneset,
 
       if (nrow(df)>0) {
 
-        if (nrow(df)<30) {
+        if (nrow(df)<50) {
           ## make the plot
           goplot <-
             ggplot(df) +
@@ -556,14 +556,19 @@ check_enrichment <- function(geneset,
     }
 
     if (expand==T) {
-      df.enriched <-
-        df.enriched %>%
-        select(annot_desc,gene_name) %>%
-        separate_rows(gene_name, sep=", ") %>%
-        left_join(all_genes[,c("gene_name","gene_desc")], by="gene_name") %>%
-        select(gene_name, gene_desc, everything()) %>%
-        group_by(gene_name,gene_desc) %>%
-        summarize(annot_desc = paste(annot_desc, collapse = "; "))
+      if(nrow(df.enriched)>=1) {
+        df.enriched <-
+          df.enriched %>%
+          select(annot_desc,gene_name) %>%
+          separate_rows(gene_name, sep=", ") %>%
+          left_join(all_genes[,c("gene_name","gene_desc")], by="gene_name") %>%
+          select(gene_name, gene_desc, everything()) %>%
+          group_by(gene_name,gene_desc) %>%
+          summarize(annot_desc = paste(annot_desc, collapse = "; "))
+      } else {
+        print("No enriched terms found; can't expand.")
+      }
+
     }
 
     return(df.enriched);
