@@ -16,7 +16,7 @@ Citation
 
 > Das, B. (2022). timecourseRnaseq: an R package to analyze time-course RNAseq data. DOI: 10.5281/zenodo.7069315
 
-Find it on google scholar (here)[https://scholar.google.co.in/citations?view_op=view_citation&hl=en&user=Xrx37IoAAAAJ&authuser=1&citation_for_view=Xrx37IoAAAAJ:5nxA0vEk-isC]
+for other formats, find it on [_google scholar_](https://scholar.google.com/scholar?cluster=3123727060560534317&hl=en&oi=scholarr)
 
 
 Installation
