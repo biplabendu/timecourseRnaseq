@@ -11,6 +11,12 @@ The timecourseRnaseq package currently has one primary function:
    
 which performs overrepresentation analyses (using hypergeometric test) and returns the enrichment results as a table. Additionally, the function also plots the enrichment results by default.
 
+Citation
+------------
+
+> Das, B. (2022). timecourseRnaseq: an R package to analyze time-course RNAseq data. DOI: 10.5281/zenodo.7069315
+
+
 
 Installation
 ------------
