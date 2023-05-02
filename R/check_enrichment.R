@@ -133,12 +133,30 @@ check_enrichment <- function(geneset,
 
       print("Done.")
 
+    } else if (org=="pbar"){
+
+      print("Loading annotation file for Pogonomyrmex barbatus")
+      # load("./data/beau_annots.rda")
+      all_genes <- pbar_annots
+
+      # define the separator
+      separator = "; "
+      # check if annotation file is correct
+      if (all_genes %>% filter(gene_name %in% genes) %>% nrow() == 0) {
+        print("Genes names do not match!")
+        print("Check if provided gene names are the same as in the annotation file, or check if org is incorrect.")
+        stop()
+      }
+
+      print("Done.")
+
     } else {
 
       writeLines("Invalid option for argument org.")
       writeLines("Available organisms (org):")
       writeLines("Camponotus floridanus (org=cflo), Ophiocordyceps camponoti-floridani (org=ophio_cflo),")
       writeLines("Ophiocordyceps kimflemingiae (org=ophio_kim), Beauveria bassiana (org=beau)")
+      writeLines("Pogonomyrmex barbatus (org=pbar)")
       writeLines("")
       writeLines("Use path_to_annot = your/path/to/annotation/csv/file to provide your own annotation file")
       writeLines("Remember to specify the separator used (sep = ?).")

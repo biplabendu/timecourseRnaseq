@@ -8,4 +8,4 @@ ophio_kim_annots <-
   as_tibble() %>%
   mutate(gene_desc="not_available")
 
-usethis::use_data(ophio_kim_annots)
+usethis::use_data(ophio_kim_annots, overwrite = T)

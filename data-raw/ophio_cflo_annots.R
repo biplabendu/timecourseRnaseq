@@ -8,4 +8,4 @@ ophio_cflo_annots <-
   as_tibble() %>%
   select(gene_name, gene_desc=blast_annot, everything())
 
-usethis::use_data(ophio_cflo_annots)
+usethis::use_data(ophio_cflo_annots, overwrite = T)
