@@ -36,8 +36,7 @@ make_database_expression <- function(data,
                                      db_name = "database") {
 
   ## Load packages ----------
-  # pacman::p_load(RSQLite, tidyverse, dbplyr, DT, conflicted)
-  library(dplyr)
+  requireNamespace(dplyr)
 
   ##-##-##-##-##-##-##-##-##-##-##-##-
   # SETUP

@@ -20,7 +20,7 @@
 #'
 #' @return A table (enrichment results as a tibble) and one plot (ggplot2 object)
 #'
-#' @import tidyr dplyr ggplot2 ggrepel stringr conflicted tm wordcloud wordcloud2 RColorBrewer
+#' @import tidyr dplyr ggplot2 ggrepel stringr conflicted tm wordcloud wordcloud2 RColorBrewer grid ggthemes
 #'
 #' @export
 #'
@@ -56,13 +56,14 @@ check_enrichment <- function(geneset,
   # save the input list of genes for enrichment test
   genes <- as.character(geneset)
 
-  ## Load the required libraries
-  library(tidyr)
-  library(dplyr)
-  library(ggplot2)
-  library(ggrepel)
-  library(stringr)
-  library(conflicted)
+  # ## Load the required libraries
+  requireNamespace("dplyr")
+  # library(tidyr)
+  # library(dplyr)
+  # library(ggplot2)
+  # library(ggrepel)
+  # library(stringr)
+  # library(conflicted)
   ## set conflict preference
   conflict_prefer("filter","dplyr", quiet = T)
   conflict_prefer("select","dplyr", quiet = T)
@@ -408,35 +409,42 @@ check_enrichment <- function(geneset,
       if(nrow(df.enriched)!=0) {
 
         ## build the custom theme
-        theme_Publication <- function(base_size=14, base_family="Helvetica") {
-          library(grid)
-          library(ggthemes)
-          (theme_foundation(base_size=base_size, base_family=base_family)
-            + theme(plot.title = element_text(face = "bold",
-                                              size = rel(1.2), hjust = 0.5),
-                    text = element_text(),
-                    panel.background = element_rect(colour = NA),
-                    plot.background = element_rect(colour = NA),
-                    panel.border = element_rect(colour = NA),
-                    axis.title = element_text(face = "bold",size = rel(1)),
-                    axis.title.y = element_text(angle=90,vjust =2),
-                    axis.title.x = element_text(vjust = -0.2),
-                    axis.text = element_text(),
-                    axis.line = element_line(colour="black"),
-                    axis.ticks = element_line(),
-                    panel.grid.major = element_line(colour="#f0f0f0"),
-                    panel.grid.minor = element_blank(),
-                    legend.key = element_rect(colour = NA),
-                    legend.position = "bottom",
-                    legend.direction = "horizontal",
-                    legend.key.size= unit(0.4, "cm"),
-                    legend.margin = unit(0, "cm"),
-                    legend.title = element_text(face="italic"),
-                    plot.margin=unit(c(10,5,5,5),"mm"),
-                    strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
-                    strip.text = element_text(face="bold")
-            ))
-
+        theme_Publication <- function(base_size=14,
+                                      base_family="Helvetica") {
+          # library(grid)
+          # library(ggthemes)
+          (
+            ggthemes::theme_foundation(
+              base_size=base_size,
+              base_family=base_family
+            ) +
+              theme(
+                plot.title = element_text(
+                  face = "bold",size = rel(1.2), hjust = 0.5
+                ),
+                text = element_text(),
+                panel.background = element_rect(colour = NA),
+                plot.background = element_rect(colour = NA),
+                panel.border = element_rect(colour = NA),
+                axis.title = element_text(face = "bold",size = rel(1)),
+                axis.title.y = element_text(angle=90,vjust =2),
+                axis.title.x = element_text(vjust = -0.2),
+                axis.text = element_text(),
+                axis.line = element_line(colour="black"),
+                axis.ticks = element_line(),
+                panel.grid.major = element_line(colour="#f0f0f0"),
+                panel.grid.minor = element_blank(),
+                legend.key = element_rect(colour = NA),
+                legend.position = "bottom",
+                legend.direction = "horizontal",
+                legend.key.size= unit(0.4, "cm"),
+                legend.margin = unit(0, "cm"),
+                legend.title = element_text(face="italic"),
+                plot.margin=unit(c(10,5,5,5),"mm"),
+                strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
+                strip.text = element_text(face="bold")
+              )
+          )
         }
 
 
@@ -485,15 +493,20 @@ check_enrichment <- function(geneset,
               coord_flip() +
 
               theme(legend.position = "bottom") +
-              theme(strip.background = element_blank(), strip.text = element_blank(), # get rid of facet grid labels
-                    plot.title = element_text(hjust = 0.5),
-                    axis.line.y = element_line(colour = "transparent",
-                                               size=1),
-                    legend.title = element_blank(),
-                    # legend.position = "None",
-                    # plot.caption = element_text(hjust=0.5),
-                    plot.subtitle = element_text(hjust=0.5),
-                    axis.title.y = element_blank())
+              theme(
+                strip.background = element_blank(),
+                strip.text = element_blank(), # get rid of facet grid labels
+                plot.title = element_text(hjust = 0.5),
+                axis.line.y = element_line(
+                  colour = "transparent",
+                  size=1
+                ),
+                legend.title = element_blank(),
+                # legend.position = "None",
+                # plot.caption = element_text(hjust=0.5),
+                plot.subtitle = element_text(hjust=0.5),
+                axis.title.y = element_blank()
+              )
             # guides(fill = guide_legend(title = "Legend Title",
             #                            override.aes = aes(label = "")))
 
@@ -505,17 +518,19 @@ check_enrichment <- function(geneset,
               goplot <-
                 goplot +
                 # add annotations
-                ggrepel::geom_label_repel(aes(label =  paste0(" of ",n_annot_bg," ")),
-                                          fill = "transparent",
-                                          color = 'black',
-                                          size = 5,
-                                          direction = "x",
-                                          # ylim=c(10,max()),
-                                          point.padding = 0.25,
-                                          label.padding = 0.25,
-                                          segment.color = 'transparent',
-                                          # get rid of the outline for the label
-                                          label.size = NA)
+                ggrepel::geom_label_repel(
+                  aes(label =  paste0(" of ",n_annot_bg," ")),
+                  fill = "transparent",
+                  color = 'black',
+                  size = 5,
+                  direction = "x",
+                  # ylim=c(10,max()),
+                  point.padding = 0.25,
+                  label.padding = 0.25,
+                  segment.color = 'transparent',
+                  # get rid of the outline for the label
+                  label.size = NA
+                )
             }
             print(goplot)
 
@@ -524,36 +539,44 @@ check_enrichment <- function(geneset,
             # (borrowed from: https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a)
 
             # load libraries
-            library(tm)
-            library(wordcloud)
-            library(RColorBrewer)
-            library(wordcloud2)
+            # library(tm)
+            # library(wordcloud)
+            # library(RColorBrewer)
+            # library(wordcloud2)
 
             # get text as a character vector
             text <- df %>% pull(annot_desc)
             # load your text data as a corpus
-            docs <- Corpus(VectorSource(text)) # requires library "tm"
+            docs <- tm::Corpus(VectorSource(text)) # requires library "tm"
             # clean text (necessary?)
             docs <- docs %>%
-              tm_map(removeNumbers) %>%
-              tm_map(removePunctuation) %>%
-              tm_map(stripWhitespace)
-            docs <- tm_map(docs, content_transformer(tolower))
-            docs <- tm_map(docs, removeWords, c("process", "molecular","cellular",
-                                                "component", "compound", "part",
-                                                "activity", "acid"
-            ))
+              tm::tm_map(removeNumbers) %>%
+              tm::tm_map(removePunctuation) %>%
+              tm::tm_map(stripWhitespace)
+            docs <- tm::tm_map(docs, content_transformer(tolower))
+            docs <- tm::tm_map(
+              docs,
+              removeWords,
+              c(
+                "process", "molecular","cellular",
+                "component", "compound", "part",
+                "activity", "acid"
+              )
+            )
             # create document-term-matrix
-            dtm <- TermDocumentMatrix(docs)
+            dtm <- tm::TermDocumentMatrix(docs)
             matrix <- as.matrix(dtm)
-            words <- sort(rowSums(matrix),decreasing=TRUE)
-            df <- data.frame(word = names(words),freq=words)
+            words <- sort(rowSums(matrix), decreasing=TRUE)
+            df <- data.frame(word = names(words), freq=words)
             # generate word-cloud
-            wordcloud::wordcloud(words = df$word, freq = df$freq, min.freq = 2,
-                                 max.words=200, random.order=FALSE, rot.per=0.35,
-                                 scale=c(5,0.15),
-                                 # colors=brewer.pal(8, "Dark2")
-                                 colors=col.scheme[[1]]
+            wordcloud::wordcloud(
+              words = df$word,
+              freq = df$freq,
+              min.freq = 2,
+              max.words=200,
+              random.order=FALSE,
+              rot.per=0.35,
+              scale=c(5,0.15)
             )
 
           }
