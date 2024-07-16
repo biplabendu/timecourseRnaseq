@@ -2,13 +2,27 @@
 % Please edit documentation in R/check_enrichment.R
 \name{check_enrichment}
 \alias{check_enrichment}
-\title{Title}
+\title{Check enrichment (over-representation) of GO/PFAM terms using Hypergeometric Test}
 \usage{
-check_enrichment(geneset, what = "GOs", function.dir = ".",
-  path_to_annot = "not_provided", sep = ";", gene_col = "gene_name",
-  org = "ophio_cflo", bg = "all", FDR = 5, atleast = 5,
-  verbose = F, plot = T, n_trunc = 40, clean = "no", filter = T,
-  simple = T, expand = F)
+check_enrichment(
+  geneset,
+  what = "GOs",
+  function.dir = ".",
+  path_to_annot = "not_provided",
+  sep = ";",
+  gene_col = "gene_name",
+  org = "ophio_cflo",
+  bg = "all",
+  FDR = 5,
+  atleast = 5,
+  verbose = F,
+  plot = T,
+  n_trunc = 40,
+  clean = "no",
+  filter = T,
+  simple = T,
+  expand = F
+)
 }
 \arguments{
 \item{geneset}{A character vector of gene names of interest that you want to run functional enrichment on.}
@@ -49,7 +63,7 @@ check_enrichment(geneset, what = "GOs", function.dir = ".",
 A table (enrichment results as a tibble) and one plot (ggplot2 object)
 }
 \description{
-Title
+Check enrichment (over-representation) of GO/PFAM terms using Hypergeometric Test
 }
 \examples{
 some.genes <- c("BBA_00100", "BBA_01000", "BBA_10000", "BBA_10001", "BBA_10002", "BBA_10003", "BBA_10004")

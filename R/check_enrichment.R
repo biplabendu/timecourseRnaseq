@@ -1,4 +1,4 @@
-#' Title
+#' Check enrichment (over-representation) of GO/PFAM terms using Hypergeometric Test
 #'
 #' @param geneset A character vector of gene names of interest that you want to run functional enrichment on.
 #' @param what Which functional annotation to run enrichment for? Select from "GOs", "pfams", "signalP", "TMHMM" or user-defined column name. The default is "GOs".
@@ -19,6 +19,9 @@
 #' @param expand If set to TRUE, will return a long-formatted table of the filtered and simplified enrichment result.
 #'
 #' @return A table (enrichment results as a tibble) and one plot (ggplot2 object)
+#'
+#' @import tidyr dplyr ggplot2 ggrepel stringr conflicted tm wordcloud wordcloud2 RColorBrewer
+#'
 #' @export
 #'
 #' @examples
