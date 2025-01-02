@@ -4,11 +4,25 @@
 \alias{check_enrichment}
 \title{Title}
 \usage{
-check_enrichment(geneset, what = "GOs", function.dir = ".",
-  path_to_annot = "not_provided", sep = ";", gene_col = "gene_name",
-  org = "ophio_cflo", bg = "all", FDR = 5, atleast = 5,
-  verbose = F, plot = T, n_trunc = 40, clean = "no", filter = T,
-  simple = T, expand = F)
+check_enrichment(
+  geneset,
+  what = "GOs",
+  function.dir = ".",
+  path_to_annot = "not_provided",
+  sep = ";",
+  gene_col = "gene_name",
+  org = "ophio_cflo",
+  bg = "all",
+  FDR = 5,
+  atleast = 5,
+  verbose = F,
+  plot = T,
+  n_trunc = 40,
+  clean = "no",
+  filter = T,
+  simple = T,
+  expand = F
+)
 }
 \arguments{
 \item{geneset}{A character vector of gene names of interest that you want to run functional enrichment on.}

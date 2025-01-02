@@ -21,7 +21,9 @@
 #'    except in the `id_column` field.
 #'
 #' @export
-log2_transform_data <- function(data, id_column, log2) {
+log2_transform_data <- function(data,
+                                id_column,
+                                log2 = TRUE) {
   chk::chk_data(data)
   chk::chk_logical(log2)
 
@@ -111,7 +113,7 @@ subset_data <- function(data,
     cat("\n")
     cat(
       glue::glue(
-        "[ NOTE ]: After subsetting, { nrow(tmp_data) } of { nrow(data) } rows remain."
+        "[ NOTE ]: After subsetting, { nrow(out) } of { nrow(data) } rows remain."
       )
     )
   }

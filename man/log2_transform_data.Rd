@@ -4,7 +4,7 @@
 \alias{log2_transform_data}
 \title{Log-2 transform data}
 \usage{
-log2_transform_data(data, id_column, log2)
+log2_transform_data(data, id_column, log2 = TRUE)
 }
 \arguments{
 \item{data}{dataframe. One of the columns should contain unique gene
