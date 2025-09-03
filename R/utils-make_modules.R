@@ -424,7 +424,7 @@ create_modules_auto <- function(tree,
                                 merge_cutoff_similarity,
                                 max_modules) {
 
-  init_modules <- create_modules(
+  merge <- create_modules(
     tree = tree,
     dissTOM = dissTOM,
     data = data,
@@ -432,7 +432,7 @@ create_modules_auto <- function(tree,
     min_module_size = min_module_size
   )
 
-  n_modules <- ncol(init_modules$modules$newMEs)
+  n_modules <- ncol(merge$modules$newMEs)
   cutoff <- merge_cutoff_similarity
 
   while (n_modules > max_modules) {
