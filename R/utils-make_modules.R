@@ -389,7 +389,7 @@ create_modules <- function(tree,
     )
     cat("\n\n")
     WGCNA::plotDendroAndColors(
-      geneTree,
+      tree,
       cbind(modules, mergedColors),
       main = "Cluster Dendogram (Dynamic Tree Cut)",
       c("Inital classification", "Merged dynamic"),
