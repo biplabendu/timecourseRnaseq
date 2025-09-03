@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^timecourseRnaseq\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
