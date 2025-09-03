@@ -30,25 +30,28 @@ make_modules <- function(
   # 1. one row per gene; no duplicates
   # 2. ...
 
-  # Set defaults
-  if (is.null(min_expression)) {
-    min_expression <- estimate_min_expression(data, id_column)
-    cat("min_expression =", min_expression)
-  }
-  if (is.null(min_timepoints)) {
-    min_timepoints <- ceiling( (ncol(data) - 1) * (2/3) )
-    cat("min_timepoints =", min_timepoints)
-  }
-
   # A. Data prep -----------------------------
   cat("---------------------------------------------------\n")
   cat("1. Log2-transform and subset \n")
   cat("---------------------------------------------------\n")
+  # log2-transform
+  if (log2) {
+    data <- data |>
+      log2_transform_data(
+        id_column = id_column,
+        log2
+      )
+  }
+  # Estimate defaults
+  if (is.null(min_expression)) {
+    min_expression <- estimate_min_expression(data, id_column)
+    cat("Estimated min_expression =", min_expression, "\n")
+  }
+  if (is.null(min_timepoints)) {
+    min_timepoints <- ceiling( (ncol(data) - 1) * (2/3) )
+    cat("Estimated min_timepoints =", min_timepoints, "\n")
+  }
   tmp_data <- data |>
-    log2_transform_data(
-      id_column = id_column,
-      log2
-    ) |>
     subset_data(
       min_expression,
       min_timepoints,
