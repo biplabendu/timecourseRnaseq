@@ -22,6 +22,8 @@ make_modules <- function(
     max_modules = 15,
     merge_cutoff_similarity = 0.9,
     plot_network = TRUE,
+    plot_network_min_edge = 0.65,
+    tidy_modules = TRUE,
     cache = FALSE
 ) {
   chk::chk_data(data)
@@ -162,7 +164,7 @@ make_modules <- function(
       plot_adj_as_network(
         layout = igraph::layout_as_tree,
         matrix = adj_matrix_ME$ME,
-        min_edge = 0.65,
+        min_edge = plot_network_min_edge,
         node_label_size = 1.2,
         node_size = 35,
         edge_size = 5,
@@ -178,13 +180,20 @@ make_modules <- function(
         mapping_tbl = adj_matrix_ME$mapping_tbl,
         data = datExpr
       )
+
+      list(
+        modules = modules,
+        module_genes = module_genes,
+        adj_matrix = adj_matrix
+      )
+    } else {
+      list(
+        modules = modules,
+        adj_matrix = adj_matrix
+      )
     }
 
-    list(
-      modules = modules,
-      module_genes = module_genes,
-      adj_matrix = adj_matrix
-    )
+
 
   } else {
     cli::cli_abort(
