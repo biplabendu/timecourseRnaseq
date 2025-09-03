@@ -143,7 +143,7 @@ make_modules <- function(
     cat("---------------------------------------------------\n")
     cat("5. Identify modules (clusters) \n")
     cat("---------------------------------------------------\n")
-    modules <- create_modules_auto(
+    mods <- create_modules_auto(
       tree = geneTree,
       dissTOM = dissTOM,
       data = datExpr,
@@ -152,8 +152,12 @@ make_modules <- function(
       max_modules = max_modules
     )
 
+    print(class(mods))
+    mods |>
+      str(max.levels = 2)
+
     adj_matrix_ME <- calculate_module_module_sim(
-      merged_modules = modules[["modules"]]
+      merged_modules = mods[["modules"]]
     )
 
     # 6. Tidy modules
@@ -177,19 +181,19 @@ make_modules <- function(
 
     if (tidy_modules) {
       module_genes <- tidy_modules(
-        merged_modules = modules[["colors"]],
+        merged_modules = mods[["colors"]],
         mapping_tbl = adj_matrix_ME$mapping_tbl,
         data = datExpr
       )
 
       list(
-        modules = modules,
+        modules = mods,
         module_genes = module_genes,
         adj_matrix = adj_matrix
       )
     } else {
       list(
-        modules = modules,
+        modules = mods,
         adj_matrix = adj_matrix
       )
     }
