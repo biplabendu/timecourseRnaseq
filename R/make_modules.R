@@ -163,7 +163,7 @@ make_modules <- function(
 
     if (plot_network) {
       plot_adj_as_network(
-        layout = igraph::layout_as_tree,
+        layout = igraph::layout.sugiyama,
         matrix = adj_matrix_ME$ME,
         min_edge = plot_network_min_edge,
         node_label_size = 1.2,
