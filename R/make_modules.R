@@ -152,13 +152,14 @@ make_modules <- function(
       max_modules = max_modules
     )
 
+    adj_matrix_ME <- calculate_module_module_sim(
+      merged_modules = modules[["modules"]]
+    )
+
     # 6. Tidy modules
     cat("---------------------------------------------------\n")
     cat("6. Tidy modules (clusters) \n")
     cat("---------------------------------------------------\n")
-    adj_matrix_ME <- calculate_module_module_sim(
-      merged_modules = modules[["modules"]]
-    )
 
     if (plot_network) {
       plot_adj_as_network(
