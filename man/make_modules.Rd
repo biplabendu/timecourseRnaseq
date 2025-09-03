@@ -8,13 +8,17 @@ make_modules(
   data,
   log2 = TRUE,
   id_column = "gene_name",
-  min_expression = 10,
-  min_timepoints = 8,
+  min_expression = NULL,
+  min_timepoints = NULL,
   method = "wgcna",
+  qc = FALSE,
   sim_method = "kendall",
   soft_power = NULL,
   min_module_size = 50,
-  merge_cutoff_similarity = 0.9
+  max_modules = 15,
+  merge_cutoff_similarity = 0.9,
+  plot_network = TRUE,
+  cache = FALSE
 )
 }
 \arguments{
