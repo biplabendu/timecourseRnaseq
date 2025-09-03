@@ -18,6 +18,8 @@ make_modules(
   max_modules = 15,
   merge_cutoff_similarity = 0.9,
   plot_network = TRUE,
+  plot_network_min_edge = 0.65,
+  tidy_modules = TRUE,
   cache = FALSE
 )
 }
