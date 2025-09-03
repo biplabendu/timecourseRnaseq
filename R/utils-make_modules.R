@@ -156,7 +156,7 @@ calculate_gene_gene_sim <- function(data,
   if(cache == FALSE) {
     cat("Running gene-gene similarity...")
     sim_matrix <- cor(
-      datExpr,
+      data,
       method = method,
       ...
     )
@@ -182,7 +182,7 @@ calculate_gene_gene_sim <- function(data,
     if (!file.exists(sim_matrix_path) | overwrite == TRUE) {
       cat("Running gene-gene similarity...")
       sim_matrix <- cor(
-        datExpr,
+        data,
         method = method,
         ...
       )
