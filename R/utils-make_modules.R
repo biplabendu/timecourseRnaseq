@@ -447,7 +447,11 @@ create_modules_auto <- function(tree,
     n_modules <- ncol(merge$modules$newMEs)
   }
 
-  cat("Cutoff used:", cutoff, "\nNumber of modules identified:", n_modules)
+  cat(
+    "\nCutoff used:", cutoff,
+    "\nNumber of modules identified:", n_modules,
+    "\n\n"
+  )
 
   merge
 }
@@ -801,21 +805,27 @@ calculate_module_module_sim <- function(merged_modules, plot = TRUE) {
   cat("Done.\n")
 
   if (plot) {
-    cat("Plotting adjacency matrix for module-module similarity...")
-    gplots::heatmap.2(
-      t(adj_matrix_ME),
-      col = viridis::inferno(100),
-      # labRow = NA,
-      # labCol = NA,
-      trace = 'none',
-      dendrogram = 'row',
-      xlab = '',
-      ylab = '',
-      main = 'Adjacency matrix - MEs \n(module-module similarity)',
-      density.info = 'none',
-      revC = TRUE
-    )
-    cat("Done.\n")
+    cat("Plotting adjacency matrix for module-module similarity...\n")
+    tryCatch({
+      grDevices::dev.new()
+      gplots::heatmap.2(
+        t(adj_matrix_ME),
+        col = viridis::inferno(100),
+        trace = 'none',
+        dendrogram = 'row',
+        xlab = '',
+        ylab = '',
+        main = 'Adjacency matrix - MEs \n(module-module similarity)',
+        density.info = 'none',
+        revC = TRUE
+      )
+      trash <- grDevices::dev.off()
+    }, error = function(e) {
+      cat(
+        "Plotting failed with error:", conditionMessage(e),
+        "\nContinuing execution...\n"
+      )
+    })
   }
 
   list(
