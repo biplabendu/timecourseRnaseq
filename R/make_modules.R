@@ -152,10 +152,6 @@ make_modules <- function(
       max_modules = max_modules
     )
 
-    print(class(mods))
-    mods |>
-      str(max.levels = 2)
-
     adj_matrix_ME <- calculate_module_module_sim(
       merged_modules = mods[["modules"]]
     )
@@ -189,12 +185,14 @@ make_modules <- function(
       list(
         modules = mods,
         module_genes = module_genes,
-        adj_matrix = adj_matrix
+        adj_matrix = adj_matrix,
+        adj_matrix_ME = adj_matrix_ME
       )
     } else {
       list(
         modules = mods,
-        adj_matrix = adj_matrix
+        adj_matrix = adj_matrix,
+        adj_matrix_ME = adj_matrix_ME
       )
     }
 
