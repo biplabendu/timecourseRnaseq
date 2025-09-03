@@ -403,9 +403,11 @@ create_modules <- function(tree,
     table(mergedColors) |> print()
 
     # return the merged modules
-    list(
-      "colors" = mergedColors,
-      "modules" = merged_modules
+    return(
+      list(
+        "colors" = mergedColors,
+        "modules" = merged_modules
+      )
     )
 
   } else {
@@ -453,7 +455,7 @@ create_modules_auto <- function(tree,
     "\n\n"
   )
 
-  merge
+  return(merge)
 }
 
 tidy_modules <- function(merged_modules, mapping_tbl, data) {
