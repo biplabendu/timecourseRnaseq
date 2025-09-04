@@ -708,12 +708,18 @@ estimate_soft_power <- function(sft) {
     head(1) |>
     pull(Power)
 
-  case_when(
+  estimate <- case_when(
     sft$powerEstimate < 16 ~ min(sft$powerEstimate, my_estimate),
     is.na(my_estimate) & !is.na(sft$powerEstimate) ~ sft$powerEstimate,
     .default = my_estimate
   ) |>
     as.integer()
+
+  if (is.na(estimate) | is.null(estimate)) {
+    estimate <- as.integer(readline(prompt = "Enter an integer: "))
+  }
+
+  estimate
 }
 
 plot_adj_as_network <- function(matrix,
