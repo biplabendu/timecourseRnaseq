@@ -710,10 +710,10 @@ estimate_soft_power <- function(sft) {
 
   estimate <- case_when(
     sft$powerEstimate < 16 ~ min(sft$powerEstimate, my_estimate),
-    is.na(my_estimate) & !is.na(sft$powerEstimate) ~ sft$powerEstimate,
-    .default = my_estimate
-  ) |>
-    as.integer()
+    !is.na(my_estimate) ~ my_estimate,
+    !is.na(sft$powerEstimate) ~ sft$powerEstimate,
+    .default = NA
+  )
 
   if (is.na(estimate) | is.null(estimate)) {
     estimate <- as.integer(readline(prompt = "Enter an integer: "))
