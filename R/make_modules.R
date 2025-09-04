@@ -97,7 +97,7 @@ make_modules <- function(
     if (is.null(soft_power)) {
       soft_power <- estimate_soft_power(sft)
     } else {
-      chk::chk_integer(soft_power)
+      chk::chk_number(soft_power)
       chk::chk_gt(soft_power, 1)
     }
     cat(

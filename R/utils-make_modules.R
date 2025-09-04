@@ -697,21 +697,21 @@ plot_network_topology <- function(data,
 estimate_soft_power <- function(sft) {
   my_estimate <- sft$fitIndices |>
     filter(
-      SFT.R.sq > 0.8 &
+      SFT.R.sq > 0.7 &
         SFT.R.sq <= 0.9,
       Power > 6 &
         Power < 16
     ) |>
     arrange(
-      Power
+      desc(Power)
     ) |>
     head(1) |>
     pull(Power)
 
-  if_else(
-    sft$powerEstimate < 16,
-    max(sft$powerEstimate, my_estimate),
-    my_estimate
+  case_when(
+    sft$powerEstimate < 16 ~ min(sft$powerEstimate, my_estimate),
+    is.na(my_estimate) & !is.na(sft$powerEstimate) ~ sft$powerEstimate,
+    .default = my_estimate
   ) |>
     as.integer()
 }
