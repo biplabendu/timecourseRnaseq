@@ -2,6 +2,8 @@
 
 export(analyze_network_topology)
 export(check_enrichment)
+export(generate_color_pallete)
 export(log2_transform_data)
 export(make_modules)
 export(subset_data)
+export(tc_plot_heatmap)

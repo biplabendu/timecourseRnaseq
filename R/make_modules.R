@@ -12,6 +12,7 @@ make_modules <- function(
     data,
     log2 = TRUE,
     id_column = "gene_name",
+    subset = TRUE,
     min_expression = NULL,
     min_timepoints = NULL,
     method = "wgcna",
@@ -44,22 +45,27 @@ make_modules <- function(
         log2
       )
   }
-  # Estimate defaults
-  if (is.null(min_expression)) {
-    min_expression <- estimate_min_expression(data, id_column)
-    cat("Estimated min_expression =", min_expression, "\n")
+
+  if (subset) {
+    # Estimate defaults
+    if (is.null(min_expression)) {
+      min_expression <- estimate_min_expression(data, id_column)
+      cat("Estimated min_expression =", min_expression, "\n")
+    }
+    if (is.null(min_timepoints)) {
+      min_timepoints <- ceiling( (ncol(data) - 1) * (2/3) )
+      cat("Estimated min_timepoints =", min_timepoints, "\n")
+    }
+    tmp_data <- data |>
+      subset_data(
+        min_expression,
+        min_timepoints,
+        id_column = id_column
+      )
+    cat("\n\n")
+  } else {
+    tmp_data <- data
   }
-  if (is.null(min_timepoints)) {
-    min_timepoints <- ceiling( (ncol(data) - 1) * (2/3) )
-    cat("Estimated min_timepoints =", min_timepoints, "\n")
-  }
-  tmp_data <- data |>
-    subset_data(
-      min_expression,
-      min_timepoints,
-      id_column = id_column
-    )
-  cat("\n\n")
 
   # B. WGCNA -----------------------------------
   if (tolower(method) == "wgcna") {

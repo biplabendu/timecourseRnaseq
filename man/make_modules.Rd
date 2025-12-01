@@ -8,6 +8,7 @@ make_modules(
   data,
   log2 = TRUE,
   id_column = "gene_name",
+  subset = TRUE,
   min_expression = NULL,
   min_timepoints = NULL,
   method = "wgcna",
