@@ -23,6 +23,11 @@
 #'   \code{annotation_col} argument of \code{pheatmap}. Defaults to \code{NA}.
 #' @param cluster_cols Logical. Whether to cluster columns. Defaults to
 #'   \code{FALSE}.
+#' @param plot_dendogram Logical. Whether to print dendogram individually.
+#'   Defaults to \code{FALSE}.
+#' @param return_cluster_info Logical. If true, returns cluster information as tbl.
+#'   Defaults to \code{FALSE}.
+#' @inheritParams generate_color_pallete
 #' @param ... Additional arguments passed directly to
 #'   \code{\link[pheatmap]{pheatmap}}.
 #'
@@ -61,6 +66,9 @@ tc_plot_heatmap <- function(data,
                             treeheight_row = 150,
                             col_annot = NA,
                             cluster_cols = FALSE,
+                            return_cluster_info = TRUE,
+                            color_set = c("maroon", "white", "orange"),
+                            plot_dendogram = FALSE,
                             ...) {
 
   if (cluster_by == "row") {
@@ -79,8 +87,10 @@ tc_plot_heatmap <- function(data,
       method = hclust_method
     )
 
-    as.dendrogram(hclust_rows) |>
-      plot(horiz = TRUE)
+    if (plot_dendogram) {
+      as.dendrogram(hclust_rows) |>
+        plot(horiz = TRUE)
+    }
 
     # Make annotations for the heatmaps
     row_clusters <- data.frame(
@@ -92,11 +102,12 @@ tc_plot_heatmap <- function(data,
 
     my_pallete <- generate_color_pallete(
       mat = mat_zscore,
+      color_set = color_set,
       n_colors = scale_break_n
     )
 
     # Let's plot!
-    pheatmap::pheatmap(
+    p <- pheatmap::pheatmap(
       mat_zscore,
       show_rownames = TRUE,
       show_colnames = FALSE,
@@ -126,6 +137,12 @@ tc_plot_heatmap <- function(data,
       legend = TRUE,
       ...
     )
+
+    if (return_cluster_info) {
+      row_clusters |>
+        as_tibble()
+    }
+
   } else {
     cli::cli_abort("Param `cluster_by` should be set to 'rows'.")
   }

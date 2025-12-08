@@ -14,6 +14,9 @@ tc_plot_heatmap(
   treeheight_row = 150,
   col_annot = NA,
   cluster_cols = FALSE,
+  return_cluster_info = TRUE,
+  color_set = c("maroon", "white", "orange"),
+  plot_dendogram = FALSE,
   ...
 )
 }
@@ -45,6 +48,16 @@ heatmap. Defaults to 150.}
 
 \item{cluster_cols}{Logical. Whether to cluster columns. Defaults to
 \code{FALSE}.}
+
+\item{return_cluster_info}{Logical. If true, returns cluster information as tbl.
+Defaults to \code{FALSE}.}
+
+\item{color_set}{A character vector of length 3 defining the low, mid
+(zero), and high colors. Defaults to \code{c("maroon", "white",
+"orange")}.}
+
+\item{plot_dendogram}{Logical. Whether to print dendogram individually.
+Defaults to \code{FALSE}.}
 
 \item{...}{Additional arguments passed directly to
 \code{\link[pheatmap]{pheatmap}}.}
