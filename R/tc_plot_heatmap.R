@@ -141,8 +141,8 @@ tc_plot_heatmap <- function(data,
     if (return_cluster_info) {
       row_clusters |>
         tibble::rownames_to_column("row") |>
-        as_tibble() |>
-        arrange(
+        tibble::as_tibble() |>
+        dplyr::arrange(
           cluster
         )
     }
