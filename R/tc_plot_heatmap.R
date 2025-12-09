@@ -140,7 +140,11 @@ tc_plot_heatmap <- function(data,
 
     if (return_cluster_info) {
       row_clusters |>
-        as_tibble()
+        tibble::rownames_to_column("row") |>
+        as_tibble() |>
+        arrange(
+          cluster
+        )
     }
 
   } else {
