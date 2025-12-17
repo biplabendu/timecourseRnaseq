@@ -8,6 +8,8 @@ tc_plot_heatmap(
   data,
   cluster_by = "row",
   hclust_method = "complete",
+  pheatmap_method = NULL,
+  dist_method = "euclidean",
   n_clusters = 4,
   scale_break_n = 13,
   title = "Heatmap",
@@ -30,6 +32,15 @@ Currently, only "row" is supported. Defaults to "row".}
 
 \item{hclust_method}{A character string specifying the agglomeration method
 to be used in \code{\link[stats]{hclust}}. Defaults to "complete".}
+
+\item{pheatmap_method}{A character string specifying the agglomeration method
+to be used in \code{\link[pheatmap]{pheatmap}}. If \code{NULL},
+defaults to \code{hclust_method}.}
+
+\item{dist_method}{A character string specifying the distance measure to use
+clustering rows. Possible values are all distances supported by
+\code{\link[stats]{dist}}: "euclidean", "maximum", "manhattan", "canberra",
+"binary" or "minkowski". Defaults to "euclidean".}
 
 \item{n_clusters}{Integer. The number of clusters to cut the tree into via
 \code{\link[stats]{cutree}}. Defaults to 4.}
@@ -63,7 +74,8 @@ Defaults to \code{FALSE}.}
 \code{\link[pheatmap]{pheatmap}}.}
 }
 \value{
-A \code{pheatmap} object representing the generated heatmap.
+A \code{tibble} with two columns, one with the unique row identifier,
+and another specifying the cluster ID assigned to the row identifier.
 }
 \description{
 Generates a heatmap using \code{pheatmap::pheatmap} after performing

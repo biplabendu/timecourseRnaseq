@@ -11,6 +11,13 @@
 #'   Currently, only "row" is supported. Defaults to "row".
 #' @param hclust_method A character string specifying the agglomeration method
 #'   to be used in \code{\link[stats]{hclust}}. Defaults to "complete".
+#' @param pheatmap_method A character string specifying the agglomeration method
+#'   to be used in \code{\link[pheatmap]{pheatmap}}. If \code{NULL},
+#'   defaults to \code{hclust_method}.
+#' @param dist_method A character string specifying the distance measure to use
+#'   clustering rows. Possible values are all distances supported by
+#'   \code{\link[stats]{dist}}: "euclidean", "maximum", "manhattan", "canberra",
+#'   "binary" or "minkowski". Defaults to "euclidean".
 #' @param n_clusters Integer. The number of clusters to cut the tree into via
 #'   \code{\link[stats]{cutree}}. Defaults to 4.
 #' @param scale_break_n Integer. The number of color breaks to generate for the
@@ -31,7 +38,8 @@
 #' @param ... Additional arguments passed directly to
 #'   \code{\link[pheatmap]{pheatmap}}.
 #'
-#' @return A \code{pheatmap} object representing the generated heatmap.
+#' @return A \code{tibble} with two columns, one with the unique row identifier,
+#' and another specifying the cluster ID assigned to the row identifier.
 #'
 #' @export
 #'
@@ -60,6 +68,8 @@
 tc_plot_heatmap <- function(data,
                             cluster_by = "row",
                             hclust_method = "complete",
+                            pheatmap_method = NULL,
+                            dist_method = "euclidean",
                             n_clusters = 4,
                             scale_break_n = 13,
                             title = "Heatmap",
@@ -83,7 +93,7 @@ tc_plot_heatmap <- function(data,
 
     # Hierarchical clustering the geneset
     hclust_rows <- hclust(
-      dist(mat_zscore),
+      dist(mat_zscore, method = dist_method),
       method = hclust_method
     )
 
@@ -135,6 +145,12 @@ tc_plot_heatmap <- function(data,
       annotation_legend = TRUE,
       ## Color scale
       legend = TRUE,
+      clustering_method = ifelse(
+        !is.null(pheatmap_method),
+        pheatmap_method,
+        hclust_method
+      ),
+      clustering_distance_rows = dist_method,
       ...
     )
 
