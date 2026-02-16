@@ -9,6 +9,10 @@
 #'   converted to a matrix and plotted.
 #' @param cluster_by A character string indicating the dimension to cluster.
 #'   Currently, only "row" is supported. Defaults to "row".
+#' @param cluster_rows boolean values determining if rows should be clustered
+#'   (Default: TRUE)
+#' @param gaps_row vector of row indices that show where to put gaps into
+#'   heatmap. Set to NA if the rows are not clustered. (Default: 10)
 #' @param hclust_method A character string specifying the agglomeration method
 #'   to be used in \code{\link[stats]{hclust}}. Defaults to "complete".
 #' @param pheatmap_method A character string specifying the agglomeration method
@@ -67,6 +71,8 @@
 #'
 tc_plot_heatmap <- function(data,
                             cluster_by = "row",
+                            cluster_rows = TRUE,
+                            gaps_row = c(10),
                             hclust_method = "complete",
                             pheatmap_method = NULL,
                             dist_method = "euclidean",
@@ -81,15 +87,16 @@ tc_plot_heatmap <- function(data,
                             plot_dendogram = FALSE,
                             ...) {
 
+
+  # Set genes as rownames and convert it into a matrix
+  data <- as.data.frame(data)
+  rownames(data) = data[[1]]
+  mat_zscore <- as.matrix(data[-1])
+
+
   if (cluster_by == "row") {
     # make a list to save the cluster information
     row_clusters <- list()
-
-    # Set genes as rownames and convert it into a matrix
-    data <- as.data.frame(data)
-    rownames(data) = data[[1]]
-    mat_zscore <- as.matrix(data[-1])
-
 
     # Hierarchical clustering the geneset
     hclust_rows <- hclust(
@@ -116,6 +123,12 @@ tc_plot_heatmap <- function(data,
       n_colors = scale_break_n
     )
 
+    # Set params if cluster_rows == FALSE
+    if (!cluster_rows) {
+      gaps_row = NULL
+      row_clusters = NA
+    }
+
     # Let's plot!
     p <- pheatmap::pheatmap(
       mat_zscore,
@@ -124,10 +137,11 @@ tc_plot_heatmap <- function(data,
       ### ROW and COLUMN CLUSTERS ###
       annotation_col = col_annot,
       cluster_cols = cluster_cols,
+      cluster_rows = cluster_rows,
       annotation_row = row_clusters,
       cutree_rows = n_clusters,
       ### CELL STYLE ###
-      gaps_row = c(10),
+      gaps_row = gaps_row,
       border_color = FALSE,
       ### COLOR SCALE ###
       color = my_pallete$p_colors,

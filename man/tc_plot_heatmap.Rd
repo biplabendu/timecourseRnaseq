@@ -7,6 +7,8 @@
 tc_plot_heatmap(
   data,
   cluster_by = "row",
+  cluster_rows = TRUE,
+  gaps_row = c(10),
   hclust_method = "complete",
   pheatmap_method = NULL,
   dist_method = "euclidean",
@@ -29,6 +31,12 @@ converted to a matrix and plotted.}
 
 \item{cluster_by}{A character string indicating the dimension to cluster.
 Currently, only "row" is supported. Defaults to "row".}
+
+\item{cluster_rows}{boolean values determining if rows should be clustered
+(Default: TRUE)}
+
+\item{gaps_row}{vector of row indices that show where to put gaps into
+heatmap. Set to NA if the rows are not clustered. (Default: 10)}
 
 \item{hclust_method}{A character string specifying the agglomeration method
 to be used in \code{\link[stats]{hclust}}. Defaults to "complete".}
