@@ -77,6 +77,7 @@ tc_plot_heatmap <- function(data,
                             cluster_by = "row",
                             cluster_rows = TRUE,
                             gaps_row = c(10),
+                            cut_rows = TRUE,
                             hclust_method = "complete",
                             pheatmap_method = NULL,
                             dist_method = "euclidean",
@@ -149,6 +150,13 @@ tc_plot_heatmap <- function(data,
       row_clusters = NA
     }
 
+    if (cut_rows) {
+      which_cuts_rows <- n_clusters
+    } else {
+      which_cuts_rows <- NA
+      row_clusters = NA
+    }
+
     # Let's plot!
     p <- pheatmap::pheatmap(
       mat_zscore,
@@ -159,7 +167,7 @@ tc_plot_heatmap <- function(data,
       cluster_cols = cluster_cols,
       cluster_rows = cluster_rows,
       annotation_row = row_clusters,
-      cutree_rows = n_clusters,
+      cutree_rows = which_cuts_rows,
       ### CELL STYLE ###
       gaps_row = gaps_row,
       border_color = FALSE,

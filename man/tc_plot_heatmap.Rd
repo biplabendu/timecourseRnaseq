@@ -9,6 +9,7 @@ tc_plot_heatmap(
   cluster_by = "row",
   cluster_rows = TRUE,
   gaps_row = c(10),
+  cut_rows = TRUE,
   hclust_method = "complete",
   pheatmap_method = NULL,
   dist_method = "euclidean",
