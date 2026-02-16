@@ -15,10 +15,13 @@ tc_plot_heatmap(
   n_clusters = 4,
   scale_break_n = 13,
   title = "Heatmap",
+  show_dim_in_title = TRUE,
   treeheight_row = 150,
   col_annot = NA,
   cluster_cols = FALSE,
   return_cluster_info = TRUE,
+  show_rownames = TRUE,
+  show_colnames = FALSE,
   color_set = c("maroon", "white", "orange"),
   plot_dendogram = FALSE,
   ...
@@ -59,6 +62,9 @@ palette. Defaults to 13.}
 \item{title}{A character string for the main title of the plot. Defaults to
 "Heatmap".}
 
+\item{show_dim_in_title}{Logical. If true, appends the dimension of dataset
+in the title of the plot. Defaults to \code{TRUE}}
+
 \item{treeheight_row}{Numeric. The height of the row dendrogram in the
 heatmap. Defaults to 150.}
 
@@ -70,6 +76,10 @@ heatmap. Defaults to 150.}
 
 \item{return_cluster_info}{Logical. If true, returns cluster information as tbl.
 Defaults to \code{FALSE}.}
+
+\item{show_rownames}{boolean specifying if row names are be shown (Default: TRUE).}
+
+\item{show_colnames}{boolean specifying if column names are be shown (Default: FALSE).}
 
 \item{color_set}{A character vector of length 3 defining the low, mid
 (zero), and high colors. Defaults to \code{c("maroon", "white",

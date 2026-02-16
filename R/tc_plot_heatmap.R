@@ -28,6 +28,8 @@
 #'   palette. Defaults to 13.
 #' @param title A character string for the main title of the plot. Defaults to
 #'   "Heatmap".
+#' @param show_dim_in_title Logical. If true, appends the dimension of dataset
+#'    in the title of the plot. Defaults to \code{TRUE}
 #' @param treeheight_row Numeric. The height of the row dendrogram in the
 #'   heatmap. Defaults to 150.
 #' @param col_annot Data frame or \code{NA}. Column annotations passed to the
@@ -38,6 +40,8 @@
 #'   Defaults to \code{FALSE}.
 #' @param return_cluster_info Logical. If true, returns cluster information as tbl.
 #'   Defaults to \code{FALSE}.
+#' @param show_rownames boolean specifying if row names are be shown (Default: TRUE).
+#' @param show_colnames boolean specifying if column names are be shown (Default: FALSE).
 #' @inheritParams generate_color_pallete
 #' @param ... Additional arguments passed directly to
 #'   \code{\link[pheatmap]{pheatmap}}.
@@ -79,10 +83,13 @@ tc_plot_heatmap <- function(data,
                             n_clusters = 4,
                             scale_break_n = 13,
                             title = "Heatmap",
+                            show_dim_in_title = TRUE,
                             treeheight_row = 150,
                             col_annot = NA,
                             cluster_cols = FALSE,
                             return_cluster_info = TRUE,
+                            show_rownames = TRUE,
+                            show_colnames = FALSE,
                             color_set = c("maroon", "white", "orange"),
                             plot_dendogram = FALSE,
                             ...) {
@@ -123,6 +130,19 @@ tc_plot_heatmap <- function(data,
       n_colors = scale_break_n
     )
 
+    if (show_dim_in_title) {
+      plot_title <- paste0(
+        title,
+        "\n",
+        " n(rows) = ",
+        dim(mat_zscore)[1],
+        ", n(cols) = ",
+        dim(mat_zscore)[2]
+      )
+    } else {
+      plot_title = title
+    }
+
     # Set params if cluster_rows == FALSE
     if (!cluster_rows) {
       gaps_row = NULL
@@ -132,8 +152,8 @@ tc_plot_heatmap <- function(data,
     # Let's plot!
     p <- pheatmap::pheatmap(
       mat_zscore,
-      show_rownames = TRUE,
-      show_colnames = FALSE,
+      show_rownames = show_rownames,
+      show_colnames = show_colnames,
       ### ROW and COLUMN CLUSTERS ###
       annotation_col = col_annot,
       cluster_cols = cluster_cols,
@@ -147,14 +167,7 @@ tc_plot_heatmap <- function(data,
       color = my_pallete$p_colors,
       breaks = my_pallete$p_breaks,
       treeheight_row = treeheight_row,
-      main = paste0(
-        title,
-        "\n",
-        " n(rows) = ",
-        dim(mat_zscore)[1],
-        ", n(cols) = ",
-        dim(mat_zscore)[2]
-      ),
+      main = plot_title,
       ## annotation legend
       annotation_legend = TRUE,
       ## Color scale
@@ -168,7 +181,7 @@ tc_plot_heatmap <- function(data,
       ...
     )
 
-    if (return_cluster_info) {
+    if (return_cluster_info & cluster_rows) {
       row_clusters |>
         tibble::rownames_to_column("row") |>
         tibble::as_tibble() |>
